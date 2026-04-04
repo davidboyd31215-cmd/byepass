@@ -18,6 +18,8 @@ const PORT = process.env.PORT || 3001;
 const allowedOrigins = [
     'http://localhost:3000',
     'http://localhost:3001',
+        'https://hunihydration.com',
+        'https://www.hunihydration.com',
     process.env.FRONTEND_URL,
     process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}` : null
 ].filter(Boolean);
