@@ -49,6 +49,21 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 // Initialize Firebase Admin
 try { initFirebase() } catch(e) { console.log("Firebase not configured - running without it") };
 
+// Validate required environment variables
+const requiredEnvVars = ['PORT'];
+const optionalButWarnEnvVars = ['GOOGLE_CLIENT_ID', 'GOOGLE_CLIENT_SECRET', 'GOOGLE_REDIRECT_URI', 'FRONTEND_URL'];
+for (const v of requiredEnvVars) {
+    if (!process.env[v]) {
+        console.error(`Missing required env var: ${v}`);
+        process.exit(1);
+    }
+}
+for (const v of optionalButWarnEnvVars) {
+    if (!process.env[v]) {
+        console.warn(`Warning: Missing optional env var: ${v} - some features may not work`);
+    }
+}
+
 // ===== API ROUTES =====
 // All API endpoints are prefixed with /api/ for consistency
 
@@ -94,8 +109,7 @@ app.get('/api/health', (req, res) => {
     res.json({
         status: 'ok',
         service: 'byepass-backend',
-        timestamp: new Date().toISOString(),
-        environment: process.env.NODE_ENV || 'development'
+        timestamp: new Date().toISOString()
     });
 });
 

@@ -49,12 +49,19 @@ router.post('/bills', verifyAuth, async (req, res) => {
             }
         }
 
-        res.json({
+        const response = {
             bills: allBills,
             count: allBills.length,
             scanned: scannedProviders,
             scannedAt: new Date().toISOString()
-        });
+        };
+
+        // Add warning if no providers are connected
+        if (!googleTokens && !microsoftTokens) {
+            response.warning = 'No email providers connected';
+        }
+
+        res.json(response);
     } catch (err) {
         console.error('Scan failed:', err);
         res.status(500).json({ error: 'Bill scan failed: ' + err.message });

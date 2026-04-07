@@ -48,7 +48,9 @@ const BILL_TYPES = [
  * @returns {Object} Parsed bill data
  */
 function parseBillFromText(text, options = {}) {
-    if (!text) return {};
+    if (!text || typeof text !== 'string') {
+        return { amount: null, dueDate: null, provider: null, account: null, billType: null };
+    }
     const lowerText = text.toLowerCase();
 
     const result = {
@@ -76,6 +78,7 @@ function parseBillFromText(text, options = {}) {
     const amountPatterns = [
         /(?:amount\s*due|total\s*due|balance\s*due|total\s*amount|amount\s*owed|please\s*pay)[:\s]*\$?([\d,]+\.?\d{0,2})/i,
         /(?:total|balance|due|owe|pay)[:\s]*\$?([\d,]+\.?\d{0,2})/i,
+        /(?:total|balance|payment\s*amount|you\s*owe)[:\s]*\$?([\d,]+\.?\d{0,2})/i,
         /\$([\d,]+\.\d{2})/
     ];
 
