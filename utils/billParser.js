@@ -127,8 +127,8 @@ function parseBillFromText(text, options = {}) {
 
     // 5. Extract account number
     const accountPatterns = [
-        /(?:account\s*(?:number|#|no\.?))[:\s]*([A-Z0-9-]{4,20})/i,
-        /(?:acct\.?\s*(?:#|no\.?))[:\s]*([A-Z0-9-]{4,20})/i
+        /(?:account\s*(?:number|#|no\.?))[:\s]*([\d][\d\-\s]{3,19}[\d])/i,
+        /(?:acct\.?\s*(?:#|no\.?))[:\s]*([\d][\d\-\s]{3,19}[\d])/i
     ];
 
     for (const pattern of accountPatterns) {
